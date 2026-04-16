@@ -8,29 +8,25 @@ const { addWatermark } = require("../services/pdfService");
 
 async function mergePDFController(req, res) {
   try {
-    // Get paths of uploaded files
+    console.log("Merge API HIT");
+
     const filePaths = req.files.map((file) => file.path);
 
-    // Merge PDFs
     const mergedPdfBytes = await mergePDFs(filePaths);
 
-    // Save merged PDF to a new file
-    const outputPath = path.join("uploads", `merged-${Date.now()}.pdf`);
-    fs.writeFileSync(outputPath, mergedPdfBytes);
+    // 🔥 send directly instead of saving
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=merged.pdf");
+    res.send(mergedPdfBytes);
 
-    res.download(outputPath, "merged.pdf", (err) => {
-      if (err) console.log(err);
+    // cleanup
+    filePaths.forEach((file) => fs.unlinkSync(file));
 
-      // Optional: delete uploaded files + merged file after download
-      filePaths.forEach((file) => fs.unlinkSync(file));
-      fs.unlinkSync(outputPath);
-    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error merging PDFs", error: err.message });
   }
 }
-
 async function splitPDFController(req, res) {
   try {
     if (!req.file) {
