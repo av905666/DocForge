@@ -19,7 +19,7 @@ const PdfSplit = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                "http://localhost:5000/api/pdf/split",
+                "https://docforge-backend.onrender.com/api/pdf/split",
                 formData,
                 { responseType: "blob" }
             );

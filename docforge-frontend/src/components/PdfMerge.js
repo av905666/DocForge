@@ -18,7 +18,7 @@ const PdfMerge = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:5000/api/pdf/merge",
+        "https://docforge-backend.onrender.com/api/pdf/merge",
         formData,
         { responseType: "blob" }
       );

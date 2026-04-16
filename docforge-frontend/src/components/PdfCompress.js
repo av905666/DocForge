@@ -20,7 +20,7 @@ const PdfCompress = () => {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:5000/api/pdf/compress",
+        "https://docforge-backend.onrender.com/api/pdf/compress",
         formData,
         { responseType: "blob" }
       );

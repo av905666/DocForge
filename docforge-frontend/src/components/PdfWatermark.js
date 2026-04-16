@@ -20,7 +20,7 @@ const PdfWatermark = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                "http://localhost:5000/api/pdf/watermark",
+                "https://docforge-backend.onrender.com/api/pdf/watermark",
                 formData,
                 { responseType: "blob" }
             );
